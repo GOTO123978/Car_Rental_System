@@ -19,4 +19,9 @@ public class BranchService {
 		}
 		return repo.findByRegion(region);
 	}
+
+	public List<Branch> findAll() {
+		// TODO Auto-generated method stub
+		return repo.findAll();
+	}
 }
