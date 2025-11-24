@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.demo.Service.BranchService;
 import com.demo.Service.CarService;
 
 @Component
@@ -11,6 +12,8 @@ public class ServiceTestRunner implements CommandLineRunner {
 
 	@Autowired
 	CarService carService;
+	@Autowired
+	BranchService branchService;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -25,6 +28,11 @@ public class ServiceTestRunner implements CommandLineRunner {
 			// 測試特殊查詢
 			var smallCars = carService.findBySeats(5);
 			System.out.println("✅ findBySeats(5) 呼叫成功！");
+			// 測試 BranchService
+			var branches = branchService.findAll();
+			var names = branchService.branchName();
+			System.out.println("✅ BranchService: 找到 " + branches.size() + " 間分店");
+			System.out.println("   分店名單: " + names);
 
 		} catch (Exception e) {
 			System.err.println("❌ Service 測試失敗：" + e.getMessage());

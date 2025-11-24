@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.demo.model.Order;
 import com.demo.repository.OrderRepository;
@@ -18,10 +20,18 @@ public class OrderController {
 	OrderRepository orderRepo;
 
 	@GetMapping("/my-orders")
-	public String myOrders(Model model) {
+	public String myOrders(@RequestParam(required = false) String memberId, Model model) {
 
-		// ★★★ 未來 JWT 整合點：改為 orderRepo.findByUserId(...) ★★★
-		List<Order> orders = orderRepo.findAll();
+		List<Order> orders;
+
+		if (memberId != null && !memberId.isEmpty()) {
+			// ⭐ 有傳 memberId 就查該會員的訂單
+			orders = orderRepo.findByMemberId(memberId);
+		} else {
+			// 沒傳 memberId (例如直接打網址)，顯示空列表或是全部 (視需求而定)
+			// 建議顯示空列表，避免資料外洩
+			orders = new ArrayList<>();
+		}
 
 		model.addAttribute("orders", orders);
 

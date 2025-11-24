@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 /**
@@ -16,6 +17,7 @@ import lombok.Data;
  */
 @Data
 @Entity
+@Table(name = "branch")
 @NamedQuery(name = "Branch.findAll", query = "SELECT b FROM Branch b")
 public class Branch implements Serializable {
 	private static final long serialVersionUID = 1L;

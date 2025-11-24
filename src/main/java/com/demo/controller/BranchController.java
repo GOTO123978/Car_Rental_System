@@ -28,4 +28,10 @@ public class BranchController {
 		return ResponseEntity.ok(data);
 
 	}
+
+	// 提供給 ordermanagement.html 下拉選單
+	@GetMapping("/allbranch")
+	public List<String> branchName() {
+		return service.branchName();
+	}
 }

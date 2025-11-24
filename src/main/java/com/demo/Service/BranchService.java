@@ -1,5 +1,6 @@
 package com.demo.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,15 @@ public class BranchService {
 	public List<Branch> findAll() {
 		// TODO Auto-generated method stub
 		return repo.findAll();
+	}
+
+	// 這是 Admin 介面 (ordermanagement.html) 下拉選單需要的資料
+	public List<String> branchName() {
+		List<String> branchNameList = new ArrayList<>();
+		for (Branch l : findAll()) {
+			// 假設您資料庫存的是 nameZh (Branch model 屬性)
+			branchNameList.add(l.getNameZh());
+		}
+		return branchNameList;
 	}
 }

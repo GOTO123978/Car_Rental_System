@@ -16,6 +16,8 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column(name = "member_no")
+	private String memberId; // ⭐ 綁定 Member 業務主鍵
 
 	private String orderNo;
 
