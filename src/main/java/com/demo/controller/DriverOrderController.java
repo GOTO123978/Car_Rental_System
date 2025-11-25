@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.Service.DriverOrderService;
 import com.demo.model.DriverOrder;
+import com.demo.model.Member;
+import com.demo.repository.MemberRepository;
 import com.demo.util.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -22,16 +24,17 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
-
 public class DriverOrderController {
 
 	private final DriverOrderService driverOrderService;
 
-	// ⭐ 注入 JwtUtil
+	// ⭐ 新增：注入 MemberRepository 以查詢會員資料
+	private final MemberRepository memberRepo;
+
 	@Autowired
 	private JwtUtil jwtUtil;
 
-	// 建立新訂單 (加入權限驗證)
+	// 建立新訂單 (加入權限驗證與會員綁定)
 	@PostMapping
 	public ResponseEntity<?> createOrder(@RequestBody DriverOrder dorder,
 			@RequestHeader(value = "Authorization", required = false) String authHeader) {
@@ -47,14 +50,29 @@ public class DriverOrderController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("登入逾時，請重新登入");
 		}
 
-		// 3. 解析會員 ID (從 Token 取得 username/idNumber)
-		// 注意：我們之前的 JwtUtil 是用 idNumber 生成 Token 的
-		// 如果您希望這裡存 memberId，您可能需要去 MemberRepository 查一下，或者我們暫存 idNumber
-		String userIdNumber = jwtUtil.getUsernameFromToken(token);
+		// 3. 解析 Token 並查詢真實會員 ID
+		try {
+			// Token 內存的是身分證字號 (Subject)
+			String idNumber = jwtUtil.getUsernameFromToken(token);
 
-		// 這裡我們暫時將解析出來的 ID 存入 (實務上建議再查一次 DB 轉成 memberId)
-		dorder.setMemberId(userIdNumber);
+			// 查詢資料庫確認會員存在
+			Member member = memberRepo.findByIdNumber(idNumber);
 
+			if (member == null) {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("會員資料不存在");
+			}
+
+			// ⭐ 關鍵修正：將正確的會員編號 (例如 m00005) 寫入訂單
+			dorder.setMemberId(member.getMemberId());
+
+			// 為了資料完整性，也可以順便把姓名電話強制覆寫為會員資料 (看需求，這裡先不覆寫以保留表單輸入)
+			// dorder.setName(member.getName());
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("驗證失敗");
+		}
+
+		// 4. 建立訂單
 		try {
 			DriverOrder saved = driverOrderService.createDorder(dorder);
 			return ResponseEntity.status(HttpStatus.CREATED).body(saved);
