@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>訂單詳細資訊</title>
-    <link rel="stylesheet" href="/css/header.css">
+
 
 <style>
     body { background: #f5f5f5; }
@@ -179,7 +179,9 @@
     <!-- ⭐ Button -->
     <div class="btn-area">
         <a href="/" class="btn btn-home">回首頁</a>
-        <a href="/my-orders" class="btn btn-list">返回訂單列表</a>
+<a th:href="@{/my-orders(memberId=${order.memberId})}" class="btn btn-list">
+    返回訂單列表
+</a>
 
         <!-- ⭐ 取消訂單（僅預約中） -->
         <a th:if="${order.status == '預約中'}"

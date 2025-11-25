@@ -26,7 +26,8 @@ public class DriverOrder {
 	private Long dorderId;
 
 	private String orderNo; // 新增的訂單編號欄位（ads001）
-
+	// ⭐ 新增：會員編號 (用來關聯 Member)
+	private String memberId;
 	private String name;
 	private String phone;
 	private String email;

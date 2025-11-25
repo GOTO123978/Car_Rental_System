@@ -202,10 +202,15 @@ public class ReserveController {
 
 		order.setStatus("預約中");
 
-		// ★★★ 未來 JWT 整合點：在此處設定 UserId ★★★
-		// String currentUserId = ...;
-		// order.setUserId(currentUserId);
-
+		// ⭐ 新增：從 Session 取得會員 ID 並寫入訂單
+		String memberId = (String) session.getAttribute("loginUserId");
+		if (memberId != null) {
+			order.setMemberId(memberId); // 確保 Order.java 有此欄位
+		} else {
+			// 防呆：理論上不該發生，因為 PageController 擋過了
+			// 但為了安全，如果 Session 過期了，可以導回首頁或報錯
+			return "redirect:http://127.0.0.1:5500/index.html";
+		}
 		Order savedOrder = orderRepo.save(order);
 		session.setAttribute("latestOrder", savedOrder);
 

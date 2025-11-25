@@ -43,12 +43,18 @@ public class OrderController {
 
 		// ★★★ 未來 JWT 整合點：檢查訂單權限 ★★★
 		Order order = orderRepo.findById(id).orElse(null);
-
+		String memberId = null; // 用來暫存 memberId
 		if (order != null) {
+			memberId = order.getMemberId(); // 先把 ID 存起來
 			order.setStatus("已取消");
 			orderRepo.save(order);
 		}
 
-		return "redirect:/my-orders";
+		// ⭐ 修改：重導時帶上 memberId 參數
+		if (memberId != null) {
+			return "redirect:/my-orders?memberId=" + memberId;
+		} else {
+			return "redirect:/my-orders";
+		}
 	}
 }
