@@ -1,0 +1,38 @@
+-- ADSCar table
+CREATE TABLE IF NOT EXISTS adscar (
+  adscar_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  max_passengers INT NOT NULL,
+  max_luggage INT NOT NULL,
+  base_fare INT NOT NULL,
+  per_km_fare INT NOT NULL,
+  image LONGBLOB,
+  create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- DriverOrder table
+CREATE TABLE IF NOT EXISTS driver_order (
+  dorder_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255),
+  phone VARCHAR(20),
+  email VARCHAR(255),
+  pickup_place VARCHAR(255),
+  dropoff_place VARCHAR(255),
+  pickup_date DATE,
+  pickup_time TIME,
+  distance_km DOUBLE,
+  passenger_count INT,
+  luggage_count INT,
+  signage BOOLEAN,
+  total_price INT,
+  adscar_id BIGINT NOT NULL,
+  CONSTRAINT fk_order_car FOREIGN KEY (adscar_id) REFERENCES adscar(adscar_id) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 範例車輛（不含 image）
+INSERT INTO adscar (name, max_passengers, max_luggage, base_fare, per_km_fare)
+VALUES
+('Toyota Camry', 4, 2, 1200, 25),
+('Hyundai Staria GLD-A 8人', 8, 8, 1200, 25),
+('Toyota Alphard', 4, 6, 2200, 31),
+('Lexus LM', 4, 6, 3000, 34);
