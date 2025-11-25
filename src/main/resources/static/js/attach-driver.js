@@ -341,8 +341,10 @@ async function submitOrder() {
 document.addEventListener("DOMContentLoaded", () => {
   const pickupPlace = document.getElementById("pickupPlace");
   const dropoffPlace = document.getElementById("dropoffPlace");
+  const signage = document.getElementById("signage");
   pickupPlace?.addEventListener("change", updateDistanceAndPrice);
   dropoffPlace?.addEventListener("change", updateDistanceAndPrice);
+  signage?.addEventListener("change", updateDistanceAndPrice);
 
   // 初始化：把日期 min 設為今天
   const today = new Date().toISOString().split("T")[0];
