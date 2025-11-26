@@ -18,33 +18,32 @@ USE `carrental`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `adscar`
+-- Table structure for table `sub_cars`
 --
 
-DROP TABLE IF EXISTS `adscar`;
+DROP TABLE IF EXISTS `sub_cars`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `adscar` (
-  `adscar_id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `max_passengers` int NOT NULL,
-  `max_luggage` int NOT NULL,
-  `base_fare` int NOT NULL,
-  `per_km_fare` int NOT NULL,
-  `image` varchar(200) DEFAULT NULL,
-  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`adscar_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `sub_cars` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `brand` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` int NOT NULL,
+  `area` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `store` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `adscar`
+-- Dumping data for table `sub_cars`
 --
 
-LOCK TABLES `adscar` WRITE;
-/*!40000 ALTER TABLE `adscar` DISABLE KEYS */;
-INSERT INTO `adscar` VALUES (5,'Toyota Camry',4,2,1200,25,'/images/Toyota Camry.jpg','2025-11-25 05:48:58'),(6,'Hyundai Staria GLD-A 8人',8,8,1200,25,'/images/Hyundai Staria GLD-A.jpg','2025-11-25 05:48:58'),(7,'Toyota Alphard',4,6,2200,31,'/images/Toyota Alphard.jpg','2025-11-25 05:48:58'),(8,'Lexus LM',4,6,3000,34,'/images/Lexus LM.jpg','2025-11-25 05:48:58');
-/*!40000 ALTER TABLE `adscar` ENABLE KEYS */;
+LOCK TABLES `sub_cars` WRITE;
+/*!40000 ALTER TABLE `sub_cars` DISABLE KEYS */;
+INSERT INTO `sub_cars` VALUES (1,'Mitsubishi Veryca','Mitsubishi',9999,'北區','台北車站','img/car1.jpg'),(2,'Mitsubishi New Colt Plus','Mitsubishi',9999,'北區','羅東車站','img/car2.jpg'),(3,'Toyota Yaris','Toyota',10999,'中區','台中車站','img/car3.jpg'),(4,'Toyota Altis','Toyota',11999,'中區','台中車站','img/car4.jpg'),(5,'Nissan Kicks','Nissan',12999,'南區','高雄車站','img/car5.jpg'),(6,'Honda Fit','Honda',13999,'南區','高雄車站','img/car6.jpg');
+/*!40000 ALTER TABLE `sub_cars` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

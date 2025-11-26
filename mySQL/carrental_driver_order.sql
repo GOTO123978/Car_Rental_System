@@ -40,10 +40,11 @@ CREATE TABLE `driver_order` (
   `total_price` int DEFAULT NULL,
   `adscar_id` bigint NOT NULL,
   `order_no` varchar(255) DEFAULT NULL,
+  `member_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`dorder_id`),
   KEY `fk_order_car` (`adscar_id`),
   CONSTRAINT `fk_order_car` FOREIGN KEY (`adscar_id`) REFERENCES `adscar` (`adscar_id`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,7 +53,7 @@ CREATE TABLE `driver_order` (
 
 LOCK TABLES `driver_order` WRITE;
 /*!40000 ALTER TABLE `driver_order` DISABLE KEYS */;
-INSERT INTO `driver_order` VALUES (1,'AAA','1234567890','A@A.com','桃園國際機場','高鐵-台北站','2025-11-27','17:25:00',45,3,1,1,3795,7,'ads001');
+INSERT INTO `driver_order` VALUES (3,'王小明','0912345678','test@example.com','松山國際機場','小港國際機場','2025-11-26','19:49:00',360,1,0,1,13560,7,'ads003','m00010');
 /*!40000 ALTER TABLE `driver_order` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -65,4 +66,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-25 14:40:41
+-- Dump completed on 2025-11-26 13:13:39
